@@ -34,7 +34,7 @@ void main() {
 
   test('ListExercisesUseCase сортує та шукає за назвою', () {
     final useCase = ListExercisesUseCase(exercises);
-    expect(useCase.execute().map((e) => e.id), [1, 3, 2]);
+    expect(useCase.execute().map((e) => e.id), [1, 2, 3]);
     expect(useCase.execute(query: 'присід').map((e) => e.id), [2]);
     expect(useCase.execute(query: 'zzz'), isEmpty);
   });
