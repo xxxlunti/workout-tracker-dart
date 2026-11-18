@@ -70,6 +70,17 @@ void main() {
       expect(File(path).readAsStringSync(), contains('Віджимання'));
     });
 
+    test('порожній файл читається як порожній список', () {
+      final exercisesPath = '${dir.path}/e.json';
+      final workoutsPath = '${dir.path}/w.json';
+      File(exercisesPath).writeAsStringSync('');
+      File(workoutsPath).writeAsStringSync('  \n');
+      expect(JsonExerciseRepository(exercisesPath).getAll(), isEmpty);
+      expect(JsonExerciseRepository(exercisesPath).nextId(), 1);
+      expect(JsonWorkoutRepository(workoutsPath).getAll(), isEmpty);
+      expect(JsonWorkoutRepository(workoutsPath).nextId(), 1);
+    });
+
     test('репозиторій тренувань зберігає стан і час', () {
       final path = '${dir.path}/workouts.json';
       final repo = JsonWorkoutRepository(path);

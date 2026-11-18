@@ -16,7 +16,11 @@ class JsonWorkoutRepository implements WorkoutRepository {
   final File _file;
 
   List<WorkoutSession> _read() {
-    final data = jsonDecode(_file.readAsStringSync()) as List<dynamic>;
+    final text = _file.readAsStringSync();
+    if (text.trim().isEmpty) {
+      return <WorkoutSession>[];
+    }
+    final data = jsonDecode(text) as List<dynamic>;
     return data
         .map((e) => sessionFromJson(e as Map<String, dynamic>))
         .toList();

@@ -17,7 +17,11 @@ class JsonExerciseRepository implements ExerciseRepository {
   final File _file;
 
   List<Exercise> _read() {
-    final data = jsonDecode(_file.readAsStringSync()) as List<dynamic>;
+    final text = _file.readAsStringSync();
+    if (text.trim().isEmpty) {
+      return <Exercise>[];
+    }
+    final data = jsonDecode(text) as List<dynamic>;
     return data
         .map((e) => exerciseFromJson(e as Map<String, dynamic>))
         .toList();
