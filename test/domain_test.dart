@@ -67,6 +67,13 @@ void main() {
       expect(session.accumulated, Duration(minutes: 7));
     });
 
+    test('список вправ назовні не можна змінити в обхід addExercise', () {
+      final session = WorkoutSession(id: 1)..start(t0);
+      expect(() => session.exercises.add(sampleExercise()),
+          throwsUnsupportedError);
+      expect(session.exercises, isEmpty);
+    });
+
     test('недопустимі переходи станів', () {
       final session = WorkoutSession(id: 1);
       expect(() => session.pause(t0), throwsA(isA<InvalidWorkoutStateError>()));

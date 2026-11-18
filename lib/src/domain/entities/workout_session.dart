@@ -37,7 +37,7 @@ class WorkoutSession {
   Duration get accumulated => _elapsed;
   DateTime? get startedAt => _startedAt;
   DateTime? get resumedAt => _resumedAt;
-  List<Exercise> get exercises => _exercises;
+  List<Exercise> get exercises => List<Exercise>.unmodifiable(_exercises);
 
   Duration elapsedAt(DateTime now) {
     final resumedAt = _resumedAt;
