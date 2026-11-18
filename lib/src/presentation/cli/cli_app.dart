@@ -88,6 +88,8 @@ class CliApp {
         handler();
       } on DomainError catch (error) {
         _write('Помилка: ${error.message}');
+      } on FormatException {
+        _write('Помилка: введено некоректне значення');
       }
     }
   }
