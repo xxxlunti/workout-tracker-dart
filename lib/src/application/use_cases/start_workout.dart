@@ -1,6 +1,8 @@
 import '../../domain/entities/workout_session.dart';
+import '../../domain/errors.dart';
 import '../../domain/interfaces/clock.dart';
 import '../../domain/interfaces/workout_repository.dart';
+import '../current_workout.dart';
 import '../workout_status_view.dart';
 
 class StartWorkoutUseCase {
@@ -10,6 +12,9 @@ class StartWorkoutUseCase {
   final Clock _clock;
 
   WorkoutStatusView execute() {
+    if (findCurrentWorkout(_workouts) != null) {
+      throw InvalidWorkoutStateError('Є незавершене тренування');
+    }
     final now = _clock.now();
     final session = WorkoutSession(id: _workouts.nextId());
     session.start(now);

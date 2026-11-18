@@ -60,6 +60,13 @@ void main() {
     expect(GetWorkoutStatusUseCase(workouts, clock).execute(), isNull);
   });
 
+  test('не можна почати друге тренування, поки є незавершене', () {
+    StartWorkoutUseCase(workouts, clock).execute();
+    expect(() => StartWorkoutUseCase(workouts, clock).execute(),
+        throwsA(isA<InvalidWorkoutStateError>()));
+    expect(workouts.getAll().length, 1);
+  });
+
   test('керування без активного тренування', () {
     expect(() => PauseWorkoutUseCase(workouts, clock).execute(),
         throwsA(isA<NoActiveWorkoutError>()));
